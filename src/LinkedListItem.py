@@ -21,3 +21,8 @@ class LinkedListItem:
     @previous_item.setter
     def previous_item(self, item):
         self._prev = item
+        if item is not None:
+            item.next = self
+
+    def __repr__(self) -> str:
+        return f"LinkedListItem({self.track})"
