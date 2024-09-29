@@ -1,9 +1,11 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QDialog, QLabel, QPushButton, QTextEdit, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QDialog, QLabel, QPushButton, QLineEdit, QFileDialog
 from PyQt6 import uic
+import pygame
 
 import sys
 
 from src.PlayList import PlayList
+from src.Composition import Composition
 
 
 class MainWindow(QMainWindow):
@@ -13,7 +15,63 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("PLayer")
         uic.loadUi("ui/MainWindow.ui", self)
         self.create_playlist.clicked.connect(self.create_playlist_func)
+        self.add_composition.clicked.connect(self.add_com)
+        self.delete_composition.clicked.connect(self.delete_com)
+        self.compositions.itemDoubleClicked.connect(self.play_music)
+        self.playlist.itemDoubleClicked.connect(self.open_playlist)
+        self.delete_playlist.clicked.connect(self.del_playlist)
+        self.next_track.clicked.connect(self.next_comp)
         self.show()
+
+    def next_comp(self):
+        pygame.mixer.music.pause()
+
+    def open_playlist(self):
+        selected_playlist = self.playlist.currentItem().text()
+        for playlist in self.play_lists:
+            if playlist.name_playlist == selected_playlist:
+                self.update_compositions(playlist)
+
+    def del_playlist(self):
+        selected_playlist = self.playlist.currentItem().text()
+        for playlist in self.play_lists:
+            if playlist.name_playlist == selected_playlist:
+                del self.play_lists[self.play_lists.index(playlist)]
+                self.update_playlist()
+                self.compositions.clear()
+
+
+    def play_music(self):
+        selected_playlist = self.playlist.currentItem().text()
+        selected_composition = self.compositions.currentItem().text()
+        for playlist in self.play_lists:
+            if playlist.name_playlist == selected_playlist:
+                for composition in playlist:
+                    if composition.data.title == selected_composition:
+                        playlist.play_all(composition.data.path)
+
+    def delete_com(self):
+        selected_playlist = self.playlist.currentItem().text()
+        selected_composition = self.compositions.currentItem().text()
+        if selected_playlist:
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    for composition in playlist:
+                        if composition.data.title == selected_composition:
+                            playlist.remove(composition.data)
+                            self.update_compositions(playlist)
+
+    def add_com(self):
+        selected_item = self.playlist.currentItem()
+        file_path, _ = QFileDialog.getOpenFileName(self, "Open file", "c:\\", "Image file (*mp3 *wav)")
+        if selected_item:
+            for elem in self.play_lists:
+                if elem.name_playlist == selected_item.text():
+                    elem.append_right(Composition(com := file_path.split("/")[-1], file_path))
+                    self.update_compositions(elem)
+
+    def search_playlist(self):
+        pass
 
     def create_playlist_func(self):
         self.name = NamePlaylist(self)
@@ -23,6 +81,12 @@ class MainWindow(QMainWindow):
         self.playlist.clear()
         for el in self.play_lists:
             self.playlist.addItem(el.name_playlist)
+
+    def update_compositions(self, playlist):
+        self.compositions.clear()
+        if playlist:
+            for composition in playlist:
+                self.compositions.addItem(composition.data.title)
 
 class NamePlaylist(QDialog):
     def __init__(self, main_window):
@@ -40,10 +104,12 @@ class NamePlaylist(QDialog):
 
     def post_picture(self):
         playlist_name = self.text_name.text()
+        new_playlist = PlayList(playlist_name)
         if playlist_name:
-            self.main_window.play_lists.append(PlayList(playlist_name))
+            self.main_window.play_lists.append(new_playlist)
         self.close()
         self.main_window.update_playlist()
+        self.main_window.update_compositions(new_playlist)
 
 
 if __name__ == '__main__':

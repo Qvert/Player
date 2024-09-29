@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>573</height>
+    <width>788</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>50</y>
       <width>251</width>
       <height>211</height>
      </rect>
@@ -36,7 +36,7 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>10</y>
+      <y>50</y>
       <width>491</width>
       <height>441</height>
      </rect>
@@ -46,62 +46,28 @@
       <pointsize>14</pointsize>
      </font>
     </property>
-   </widget>
-   <widget class="QPushButton" name="pause_con">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>480</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="prev_track">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>480</y>
-      <width>61</width>
+      <x>290</x>
+      <y>510</y>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="next_track">
-    <property name="geometry">
-     <rect>
-      <x>640</x>
-      <y>480</y>
-      <width>51</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="next_">
-      <normalon>kisspng-clip-art-telephone-mobile-phones-openclipart-compu-play-svg-png-icon-free-download-239558-online-5b69d3896c26c2.196513461533662089443.jpg</normalon>
-     </iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>33</width>
-      <height>33</height>
-     </size>
+     <string>Предыдущий трек</string>
     </property>
    </widget>
    <widget class="QPushButton" name="create_playlist">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>230</y>
+      <y>270</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -114,7 +80,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
+      <y>310</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -127,7 +93,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>310</y>
+      <y>350</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -140,7 +106,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
+      <y>390</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -153,13 +119,52 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>390</y>
+      <y>430</y>
       <width>251</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Переместить композицию</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>201</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Плейлисты:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>20</y>
+      <width>201</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Композиций в плейлисте:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="next_track">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>510</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Следующий трек</string>
     </property>
    </widget>
   </widget>
