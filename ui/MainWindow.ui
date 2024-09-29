@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
+    <width>818</width>
     <height>612</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>251</width>
+      <width>271</width>
       <height>211</height>
      </rect>
     </property>
@@ -35,7 +35,7 @@
    <widget class="QListWidget" name="compositions">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>300</x>
       <y>50</y>
       <width>491</width>
       <height>441</height>
@@ -53,7 +53,7 @@
    <widget class="QPushButton" name="prev_track">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>310</x>
       <y>510</y>
       <width>221</width>
       <height>41</height>
@@ -68,7 +68,7 @@
      <rect>
       <x>10</x>
       <y>270</y>
-      <width>251</width>
+      <width>271</width>
       <height>31</height>
      </rect>
     </property>
@@ -81,7 +81,7 @@
      <rect>
       <x>10</x>
       <y>310</y>
-      <width>251</width>
+      <width>271</width>
       <height>31</height>
      </rect>
     </property>
@@ -94,7 +94,7 @@
      <rect>
       <x>10</x>
       <y>350</y>
-      <width>251</width>
+      <width>271</width>
       <height>31</height>
      </rect>
     </property>
@@ -107,7 +107,7 @@
      <rect>
       <x>10</x>
       <y>390</y>
-      <width>251</width>
+      <width>271</width>
       <height>31</height>
      </rect>
     </property>
@@ -115,17 +115,17 @@
      <string>Удалить композицию из плэйлиста</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="insert_composition">
+   <widget class="QPushButton" name="insert_composition_up">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>430</y>
-      <width>251</width>
+      <width>271</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Переместить композицию</string>
+     <string>Переместить композицию на позицию выше</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -157,7 +157,7 @@
    <widget class="QPushButton" name="next_track">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>540</x>
       <y>510</y>
       <width>231</width>
       <height>41</height>
@@ -165,6 +165,19 @@
     </property>
     <property name="text">
      <string>Следующий трек</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="insert_composition_down">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>470</y>
+      <width>271</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Переместить композицию на позицию ниже</string>
     </property>
    </widget>
   </widget>

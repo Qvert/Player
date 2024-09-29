@@ -1,6 +1,7 @@
-
+"""Module for working with double-linked list"""
 
 class LinkedListItem:
+    """Class bilinked list"""
     def __init__(self, value):
         self.data = value
         self.next = None
@@ -8,6 +9,7 @@ class LinkedListItem:
 
     @property
     def next_item(self):
+        """Get next item"""
         return self.next
 
     @next_item.setter
@@ -18,6 +20,7 @@ class LinkedListItem:
 
     @property
     def previous_item(self):
+        """Get previous item"""
         return self.previous
 
     @previous_item.setter

@@ -1,10 +1,15 @@
-from src.LinkedListItem import LinkedListItem
+"""Module for working with double-linked list data"""
+
+from src.linked_list_items import LinkedListItem
 
 
 class LinkedList:
+    """Class linked list"""
     def __init__(self, first_item=None):
         self.first_item = first_item
         self.last_item = None
+        self.iter_current = None
+        self.iter_start = None
         self.length = 0
         if first_item:
             current = first_item
@@ -17,6 +22,7 @@ class LinkedList:
             first_item.previous_item = current
 
     def append_left(self, data):
+        """Adding an item to the beginning of the list"""
         new_item = LinkedListItem(data)
         if len(self) == 0:
             self.first_item = new_item
@@ -32,6 +38,7 @@ class LinkedList:
         self.length += 1
 
     def append_right(self, data):
+        """Adding an item to the end of the list"""
         new_item = LinkedListItem(data)
         if len(self) == 0:
             self.first_item = new_item
@@ -46,20 +53,23 @@ class LinkedList:
         self.length += 1
 
     def append(self, item):
+        """Allias for append_right"""
         self.append_right(item)
 
     @property
     def last(self):
+        """Last item retrieval"""
         if self.first_item is None:
             return None
         last = self.first_item.previous
         return last
 
     def remove(self, data):
+        """Deleting an item from the list"""
         if self.first_item is None:
             raise ValueError()
         current_item = self.first_item
-        for i in range(len(self)):
+        for _ in range(len(self)):
             if current_item.data == data:
                 if len(self) == 1:
                     self.first_item = None
@@ -76,6 +86,7 @@ class LinkedList:
         raise ValueError()
 
     def insert(self, previous_item_data, new_item_data):
+        """Insert an item in place of another"""
         if self.first_item is None:
             raise ValueError("Список пуст.")
 
@@ -131,20 +142,16 @@ class LinkedList:
                 if i == index:
                     return current_item.data
                 current_item = current_item.next
-            else:
-                raise IndexError()
-
         else:
             for i in range(-len(self), 0):
                 if i == index:
                     return current_item.data
                 current_item = current_item.next
-            else:
-                raise IndexError()
+        return current_item
 
     def __contains__(self, item):
         current_item = self.first_item
-        for i in range(len(self)):
+        for _ in range(len(self)):
             if current_item.data == item:
                 return True
             current_item = current_item.next
@@ -159,8 +166,10 @@ class LinkedList:
             current = current.previous_item
             if current == self.first_item.previous_item:
                 break
+        return current
 
     def print_linked_list(self):
+        """Print the contents of a doubly linked list"""
         if self.first_item is None:
             print("Список пуст.")
             return

@@ -7,8 +7,8 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QDialog,
 from PyQt6 import uic
 import pygame
 
-from src.PlayList import PlayList
-from src.Composition import Composition
+from src.playlist import PlayList
+from src.class_track import Composition
 
 
 class MainWindow(QMainWindow):
@@ -27,7 +27,22 @@ class MainWindow(QMainWindow):
         self.delete_playlist.clicked.connect(self.del_playlist)
         self.next_track.clicked.connect(self.next_comp)
         self.prev_track.clicked.connect(self.prev_comp)
+        self.insert_composition_up.clicked.connect(self.up_track)
+        self.insert_composition_down.clicked.connect(self.down_track)
         self.show()
+
+    def up_track(self):
+        selected_playlist = self.playlist.currentItem().text()
+        selected_composition = self.compositions.currentItem().text()
+        for playlist in self.play_lists:
+            if playlist.name_playlist == selected_playlist:
+                for composition in playlist:
+                    if composition.data.title == selected_composition:
+                        playlist.move_item_up(self.play_lists.index(playlist))
+                        self.update_compositions(playlist)
+
+    def down_track(self):
+        pass
 
     def prev_comp(self):
         try:
