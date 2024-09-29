@@ -1,8 +1,11 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QDialog, QLabel, QPushButton, QLineEdit, QFileDialog
-from PyQt6 import uic
-import pygame
+"""Main module"""
 
 import sys
+
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QDialog,
+                             QLabel, QPushButton, QLineEdit, QFileDialog)
+from PyQt6 import uic
+import pygame
 
 from src.PlayList import PlayList
 from src.Composition import Composition
@@ -11,7 +14,9 @@ from src.Composition import Composition
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.play_lists = list()
+        self.name = None
+        pygame.init()
+        self.play_lists = []
         self.setWindowTitle("PLayer")
         uic.loadUi("ui/MainWindow.ui", self)
         self.create_playlist.clicked.connect(self.create_playlist_func)
@@ -21,10 +26,28 @@ class MainWindow(QMainWindow):
         self.playlist.itemDoubleClicked.connect(self.open_playlist)
         self.delete_playlist.clicked.connect(self.del_playlist)
         self.next_track.clicked.connect(self.next_comp)
+        self.prev_track.clicked.connect(self.prev_comp)
         self.show()
 
+    def prev_comp(self):
+        try:
+            pygame.mixer.music.stop()
+            selected_playlist = self.playlist.currentItem().text()
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    playlist.previous_track()
+        except AttributeError as _err:
+            print("Нет доступных треков в плейлисте")
+
     def next_comp(self):
-        pygame.mixer.music.pause()
+        try:
+            pygame.mixer.music.stop()
+            selected_playlist = self.playlist.currentItem().text()
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    playlist.next_track()
+        except AttributeError as _err:
+            print("Нет доступных треков в плейлисте")
 
     def open_playlist(self):
         selected_playlist = self.playlist.currentItem().text()
@@ -33,12 +56,15 @@ class MainWindow(QMainWindow):
                 self.update_compositions(playlist)
 
     def del_playlist(self):
-        selected_playlist = self.playlist.currentItem().text()
-        for playlist in self.play_lists:
-            if playlist.name_playlist == selected_playlist:
-                del self.play_lists[self.play_lists.index(playlist)]
-                self.update_playlist()
-                self.compositions.clear()
+        try:
+            selected_playlist = self.playlist.currentItem().text()
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    del self.play_lists[self.play_lists.index(playlist)]
+                    self.update_playlist()
+                    self.compositions.clear()
+        except AttributeError as _err:
+            print("Нет доступных плейлистов")
 
 
     def play_music(self):
@@ -48,22 +74,27 @@ class MainWindow(QMainWindow):
             if playlist.name_playlist == selected_playlist:
                 for composition in playlist:
                     if composition.data.title == selected_composition:
-                        playlist.play_all(composition.data.path)
+                        playlist.play_all(composition)
 
     def delete_com(self):
-        selected_playlist = self.playlist.currentItem().text()
-        selected_composition = self.compositions.currentItem().text()
-        if selected_playlist:
-            for playlist in self.play_lists:
-                if playlist.name_playlist == selected_playlist:
-                    for composition in playlist:
-                        if composition.data.title == selected_composition:
-                            playlist.remove(composition.data)
-                            self.update_compositions(playlist)
+        try:
+            selected_playlist = self.playlist.currentItem().text()
+            selected_composition = self.compositions.currentItem().text()
+            if selected_playlist:
+                for playlist in self.play_lists:
+                    if playlist.name_playlist == selected_playlist:
+                        for composition in playlist:
+                            if composition.data.title == selected_composition:
+                                playlist.remove(composition.data)
+                                pygame.mixer.music.stop()
+                                self.update_compositions(playlist)
+        except AttributeError as _err:
+            print("Доступных композиций не имеется")
 
     def add_com(self):
         selected_item = self.playlist.currentItem()
-        file_path, _ = QFileDialog.getOpenFileName(self, "Open file", "c:\\", "Image file (*mp3 *wav)")
+        file_path, _ = QFileDialog.getOpenFileName(self, "Open file", "c:\\",
+                                                   "Image file (*mp3 *wav)")
         if selected_item:
             for elem in self.play_lists:
                 if elem.name_playlist == selected_item.text():
