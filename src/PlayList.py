@@ -2,8 +2,9 @@ from src.LinkedList import LinkedList
 
 
 class PlayList(LinkedList):
-    def __init__(self):
+    def __init__(self, name_playlist):
         super().__init__()
+        self.name_playlist = name_playlist
 
     def play_all(self, item): # начать проигрывать все треки, начиная с item;
         pass

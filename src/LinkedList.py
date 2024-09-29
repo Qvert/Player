@@ -1,4 +1,4 @@
-from LinkedListItem import LinkedListItem
+from src.LinkedListItem import LinkedListItem
 
 
 class LinkedList:
