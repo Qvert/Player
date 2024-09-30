@@ -38,11 +38,19 @@ class MainWindow(QMainWindow):
             if playlist.name_playlist == selected_playlist:
                 for composition in playlist:
                     if composition.data.title == selected_composition:
-                        playlist.move_item_up(self.play_lists.index(playlist))
+                        playlist.move_item_down(self.play_lists.index(playlist))
                         self.update_compositions(playlist)
 
     def down_track(self):
-        pass
+        selected_playlist = self.playlist.currentItem().text()
+        selected_composition = self.compositions.currentItem().text()
+        for playlist in self.play_lists:
+            if playlist.name_playlist == selected_playlist:
+                for composition in playlist:
+                    if composition.data.title == selected_composition:
+                        playlist.move_item_up(com := self.play_lists.index(playlist))
+                        print(com)
+                        self.update_compositions(playlist)
 
     def prev_comp(self):
         try:

@@ -35,8 +35,12 @@ class PlayList(LinkedList):
     def play_track(self):
         """Playing a track."""
         pygame.mixer.init()
-        pygame.mixer.music.load(self.current_track.data.path)
-        pygame.mixer.music.play()
+        while True:
+            pygame.mixer.music.load(self.current_track.data.path)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(5)
+            self.current_track = self.current_track.next_item
 
     def move_item_up(self, index):
         """Move track up"""
