@@ -142,12 +142,13 @@ class LinkedList:
                 if i == index:
                     return current_item.data
                 current_item = current_item.next
-        else:
-            for i in range(-len(self), 0):
-                if i == index:
-                    return current_item.data
-                current_item = current_item.next
-        return current_item
+            raise IndexError()
+
+        for i in range(-len(self), 0):
+            if i == index:
+                return current_item.data
+            current_item = current_item.next
+        raise IndexError()
 
     def __contains__(self, item):
         current_item = self.first_item
@@ -166,7 +167,7 @@ class LinkedList:
             current = current.previous_item
             if current == self.first_item.previous_item:
                 break
-        return current
+        return None
 
     def print_linked_list(self):
         """Print the contents of a doubly linked list"""
