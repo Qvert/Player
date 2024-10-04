@@ -32,25 +32,32 @@ class MainWindow(QMainWindow):
         self.show()
 
     def up_track(self):
-        selected_playlist = self.playlist.currentItem().text()
-        selected_composition = self.compositions.currentItem().text()
-        for playlist in self.play_lists:
-            if playlist.name_playlist == selected_playlist:
-                for composition in playlist:
-                    if composition.data.title == selected_composition:
-                        playlist.move_item_down(self.play_lists.index(playlist))
-                        self.update_compositions(playlist)
+        try:
+            selected_playlist = self.playlist.currentItem().text()
+            selected_composition = self.compositions.currentItem().text()
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    for composition in playlist:
+                        if composition.data.title == selected_composition:
+                            print("1")
+                            playlist.move_item_up(self.play_lists.index(playlist) + 1)
+                            self.update_compositions(playlist)
+        except Exception as _err:
+            print("Вы не выбрали песню")
 
     def down_track(self):
-        selected_playlist = self.playlist.currentItem().text()
-        selected_composition = self.compositions.currentItem().text()
-        for playlist in self.play_lists:
-            if playlist.name_playlist == selected_playlist:
-                for composition in playlist:
-                    if composition.data.title == selected_composition:
-                        playlist.move_item_up(com := self.play_lists.index(playlist))
-                        print(com)
-                        self.update_compositions(playlist)
+        try:
+            selected_playlist = self.playlist.currentItem().text()
+            selected_composition = self.compositions.currentItem().text()
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    for composition in playlist:
+                        if composition.data.title == selected_composition:
+                            playlist.move_item_down(com := self.play_lists.index(playlist) + 1)
+                            print("2")
+                            self.update_compositions(playlist)
+        except Exception as _err:
+            print("Вы не выбрали песню")
 
     def prev_comp(self):
         try:

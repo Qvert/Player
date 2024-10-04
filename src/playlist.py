@@ -49,8 +49,8 @@ class PlayList(LinkedList):
 
     def move_item_down(self, index):
         """Move the track down"""
-        if index < self.length - 1:
-            self.swap(index, index + 1)
+        if index < self.length + 1:
+            self.swap(index, index - 1)
 
     def swap(self, index1, index2):
         """Swap two tracks"""
