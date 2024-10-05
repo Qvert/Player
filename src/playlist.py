@@ -1,6 +1,6 @@
 """Music track playback module"""
 import pygame
-from src.linked_list import LinkedList
+from .linked_list import LinkedList
 
 
 class PlayList(LinkedList):

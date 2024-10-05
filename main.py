@@ -12,6 +12,7 @@ from src.class_track import Composition
 
 
 class MainWindow(QMainWindow):
+    """Main class"""
     def __init__(self):
         super().__init__()
         self.name = None
@@ -32,6 +33,7 @@ class MainWindow(QMainWindow):
         self.show()
 
     def up_track(self):
+        """Move the track to a higher position"""
         try:
             selected_playlist = self.playlist.currentItem().text()
             selected_composition = self.compositions.currentItem().text()
@@ -39,13 +41,13 @@ class MainWindow(QMainWindow):
                 if playlist.name_playlist == selected_playlist:
                     for composition in playlist:
                         if composition.data.title == selected_composition:
-                            print("1")
                             playlist.move_item_up(self.play_lists.index(playlist) + 1)
                             self.update_compositions(playlist)
-        except Exception as _err:
+        except AttributeError as _err:
             print("Вы не выбрали песню")
 
     def down_track(self):
+        """Move the track to the position below"""
         try:
             selected_playlist = self.playlist.currentItem().text()
             selected_composition = self.compositions.currentItem().text()
@@ -53,13 +55,13 @@ class MainWindow(QMainWindow):
                 if playlist.name_playlist == selected_playlist:
                     for composition in playlist:
                         if composition.data.title == selected_composition:
-                            playlist.move_item_down(com := self.play_lists.index(playlist) + 1)
-                            print("2")
+                            playlist.move_item_down(self.play_lists.index(playlist) + 1)
                             self.update_compositions(playlist)
-        except Exception as _err:
+        except AttributeError as _err:
             print("Вы не выбрали песню")
 
     def prev_comp(self):
+        """Previous composition"""
         try:
             pygame.mixer.music.stop()
             selected_playlist = self.playlist.currentItem().text()
@@ -70,6 +72,7 @@ class MainWindow(QMainWindow):
             print("Нет доступных треков в плейлисте")
 
     def next_comp(self):
+        """Next composition"""
         try:
             pygame.mixer.music.stop()
             selected_playlist = self.playlist.currentItem().text()
@@ -80,12 +83,14 @@ class MainWindow(QMainWindow):
             print("Нет доступных треков в плейлисте")
 
     def open_playlist(self):
+        """Opening playlist"""
         selected_playlist = self.playlist.currentItem().text()
         for playlist in self.play_lists:
             if playlist.name_playlist == selected_playlist:
                 self.update_compositions(playlist)
 
     def del_playlist(self):
+        """Delete playlist"""
         try:
             selected_playlist = self.playlist.currentItem().text()
             for playlist in self.play_lists:
@@ -96,8 +101,8 @@ class MainWindow(QMainWindow):
         except AttributeError as _err:
             print("Нет доступных плейлистов")
 
-
     def play_music(self):
+        """Playing music"""
         selected_playlist = self.playlist.currentItem().text()
         selected_composition = self.compositions.currentItem().text()
         for playlist in self.play_lists:
@@ -107,49 +112,52 @@ class MainWindow(QMainWindow):
                         playlist.play_all(composition)
 
     def delete_com(self):
+        """Delete composition"""
         try:
             selected_playlist = self.playlist.currentItem().text()
             selected_composition = self.compositions.currentItem().text()
-            if selected_playlist:
-                for playlist in self.play_lists:
-                    if playlist.name_playlist == selected_playlist:
-                        for composition in playlist:
-                            if composition.data.title == selected_composition:
-                                playlist.remove(composition.data)
-                                pygame.mixer.music.stop()
-                                self.update_compositions(playlist)
+            for playlist in self.play_lists:
+                if playlist.name_playlist == selected_playlist:
+                    for composition in playlist:
+                        if composition.data.title == selected_composition:
+                            playlist.remove(composition.data)
+                            pygame.mixer.music.stop()
+                            self.update_compositions(playlist)
         except AttributeError as _err:
             print("Доступных композиций не имеется")
 
     def add_com(self):
+        """Adding composition"""
         selected_item = self.playlist.currentItem()
         file_path, _ = QFileDialog.getOpenFileName(self, "Open file", "c:\\",
                                                    "Image file (*mp3 *wav)")
         if selected_item:
             for elem in self.play_lists:
                 if elem.name_playlist == selected_item.text():
-                    elem.append_right(Composition(com := file_path.split("/")[-1], file_path))
+                    elem.append_right(Composition(file_path.split("/")[-1], file_path))
                     self.update_compositions(elem)
 
-    def search_playlist(self):
-        pass
-
     def create_playlist_func(self):
+        """Creating a playlist"""
         self.name = NamePlaylist(self)
         self.name.show()
 
     def update_playlist(self):
+        """Updating the widget with playlist names"""
         self.playlist.clear()
         for el in self.play_lists:
             self.playlist.addItem(el.name_playlist)
 
     def update_compositions(self, playlist):
+        """Function to update QListWidget"""
         self.compositions.clear()
         if playlist:
             for composition in playlist:
                 self.compositions.addItem(composition.data.title)
 
+
 class NamePlaylist(QDialog):
+    """Class for playlist name"""
     def __init__(self, main_window):
         super().__init__()
         self.main_window = main_window
@@ -164,6 +172,7 @@ class NamePlaylist(QDialog):
         self.button_save.clicked.connect(self.post_picture)
 
     def post_picture(self):
+        """Function for creating a playlist"""
         playlist_name = self.text_name.text()
         new_playlist = PlayList(playlist_name)
         if playlist_name:
@@ -171,6 +180,10 @@ class NamePlaylist(QDialog):
         self.close()
         self.main_window.update_playlist()
         self.main_window.update_compositions(new_playlist)
+
+    def plug(self):
+        """Plug function"""
+        return "Plug"
 
 
 if __name__ == '__main__':
